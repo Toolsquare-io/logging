@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 
+#ifndef customSubsystems
 enum class subSystem : uint8_t {
     general,
     memoryUsage,
@@ -22,3 +23,4 @@ enum class subSystem : uint8_t {
 	version,
     nmbrOfSubsystems
 };
+#endif
