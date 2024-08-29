@@ -27,8 +27,12 @@
 
 #pragma once
 
-#include <stdarg.h>               // requires for variadic functions
-#include "subsystems.h"           //
+#include <stdarg.h>        // requires for variadic functions
+#ifdef customSubsystems
+#include "../subsystems.h"
+#else
+#include "subsystems.h"
+#endif                            //
 #include "logginglevels.h"        //
 #include "logitem.h"
 #include "logoutput.h"
