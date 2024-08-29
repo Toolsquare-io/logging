@@ -1,7 +1,11 @@
 #pragma once
 #include <stdint.h>
 #include "logginglevels.h"
+#ifdef customSubsystems
+#include "./mysubsystems.h"
+#else
 #include "subsystems.h"
+#endif   
 
 // represents a destination to which we can send logging output, such as serial port, network, SD card, etc.
 

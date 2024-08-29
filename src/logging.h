@@ -29,7 +29,7 @@
 
 #include <stdarg.h>        // requires for variadic functions
 #ifdef customSubsystems
-#include "../subsystems.h"
+#include "./subsystems.h"
 #else
 #include "subsystems.h"
 #endif                            //
