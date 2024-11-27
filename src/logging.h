@@ -28,6 +28,16 @@
 #pragma once
 
 #include <stdarg.h>        // requires for variadic functions
+
+/*  Custom Sub Systems
+ to use custom subsystems add this to the platformio.ini file:
+ build_flags =
+    -I include     ; Add explicit include path
+    -D customSubsystems=1
+
+    and create your own mysubsystems.h in the include folder
+ */
+
 #ifdef customSubsystems
 #include "./mysubsystems.h"
 #else
