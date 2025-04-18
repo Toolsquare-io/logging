@@ -32,8 +32,20 @@ void logOutput::setOutputDestination(bool (*aFunction)(const char *)) {
     writeOutput = aFunction;
 }
 
+void logOutput::setOutputFunction(bool (*aFunction)(const char *)) {
+    writeOutput = aFunction;
+}
+
+void logOutput::setOutputClass(CallbackInterface* aClass) {
+    writeOutputClass = aClass;
+}
+
 bool logOutput::write(const char *theContents) const {
-    return (*writeOutput)(theContents);
+    if (writeOutputClass  != nullptr) {
+        return (*writeOutputClass).error(theContents);
+    } else {
+        return (*writeOutput)(theContents);
+    }
 }
 
 bool logOutput::isColoredOutput() const {

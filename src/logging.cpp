@@ -169,7 +169,13 @@ void uLog::setTimeSource(bool (*aFunction)(char *, uint32_t)) {
 
 void uLog::setOutput(uint32_t outputIndex, bool (*aFunction)(const char *)) {
     if (outputIndex < maxNmbrOutputs) {
-        outputs[outputIndex].setOutputDestination(aFunction);
+        outputs[outputIndex].setOutputFunction(aFunction);
+    }
+}
+
+void uLog::setOutputClass(uint32_t outputIndex, CallbackInterface *aClass) {
+    if (outputIndex < maxNmbrOutputs) {
+        outputs[outputIndex].setOutputClass(aClass);
     }
 }
 
