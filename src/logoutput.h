@@ -19,6 +19,8 @@ class CallbackInterface {
 public:
     virtual ~CallbackInterface() = default;
 
+    virtual bool debug(const char *) = 0;
+    virtual bool info(const char *) = 0;
     virtual bool error(const char *) = 0;
 };
 
