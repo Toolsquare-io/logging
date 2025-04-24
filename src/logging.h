@@ -51,14 +51,14 @@ class uLog {
   public:
     explicit uLog();        // constructor
 
-    static constexpr uint32_t maxNmbrOutputs = 2;        //
+    static constexpr uint32_t maxNmbrOutputs = 3;        //
     static constexpr uint32_t length         = 4;        // length of the items circular buffer for items
 
     // ------------------------------
     // configuring the logging object
     // ------------------------------
     void setOutput(uint32_t outputIndex, bool (*aFunction)(const char*));                                     // sets a pointer to a function handling the output of the logging to eg serial, network or file on SD card, etc.
-    void setOutputClass(uint32_t outputIndex, CallbackInterface *aClass);                                     // sets a pointer to a function handling the output of the logging to eg serial, network or file on SD card, etc.
+    void setOutputClass(uint32_t outputIndex, logOutputLogger *aClass);                                     // sets a pointer to a function handling the output of the logging to eg serial, network or file on SD card, etc.
     bool outputIsActive(uint32_t outputIndex);                                                                // is this output active
     void setTimeSource(bool (*aFunction)(char*, uint32_t));                                                   // sets a pointer to a function providing the timestamp prefix string.
     void setLoggingLevel(uint32_t outputIndex, subSystem theSubSystem, loggingLevel itemLoggingLevel);        // set level of logging for one subsystem

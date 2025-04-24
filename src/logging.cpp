@@ -11,6 +11,7 @@
 #include <string.h>         // required for strncpy()
 #include <stdio.h>          // required for vsnprintf()
 #include "logging.h"        //
+#include "logOutputLogger.h"        // required for logOutputLogger
 
 #ifndef strlcpy
 // on some platforms, string.h does not contain strlcpy, so in this case we add it here directly
@@ -116,9 +117,10 @@ void uLog::flush() {
 void uLog::output() {
     while (level > 0) {                                                                                    // if any items in buffer :
         for (uint32_t outputIndex = 0; outputIndex < maxNmbrOutputs; outputIndex++) {                      // for all outputs
-            if (outputs[outputIndex].isActive() && (checkLoggingLevel(outputIndex, items[head]))) {        // if this output is active and it wants this level of logitem..
+            if (outputs[outputIndex].isActive() && (checkLoggingLevel(outputIndex, items[head]))) {        // if this output is active and it wants this level of logitem.
+                const loggingLevel logLevel = items[head].theLoggingLevel;                                                        // get the logging level of this item
                 format(outputIndex);                                                                       // format the item according to the output's settings
-                (void)outputs[outputIndex].write(contents);
+                (void)outputs[outputIndex].write(contents, items[head].theLoggingLevel);
             }
         }
         popItem();        // remove the item from the buffer
@@ -173,7 +175,7 @@ void uLog::setOutput(uint32_t outputIndex, bool (*aFunction)(const char *)) {
     }
 }
 
-void uLog::setOutputClass(uint32_t outputIndex, CallbackInterface *aClass) {
+void uLog::setOutputClass(uint32_t outputIndex, logOutputLogger *aClass) {
     if (outputIndex < maxNmbrOutputs) {
         outputs[outputIndex].setOutputClass(aClass);
     }

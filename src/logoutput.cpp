@@ -3,7 +3,7 @@
 logOutput::logOutput() {}
 
 bool logOutput::isActive() const {
-    return writeOutput != nullptr;
+    return writeOutput != nullptr || writeOutputClass != nullptr;
 }
 
 void logOutput::setLoggingLevel(loggingLevel newLevel) {
@@ -36,13 +36,13 @@ void logOutput::setOutputFunction(bool (*aFunction)(const char *)) {
     writeOutput = aFunction;
 }
 
-void logOutput::setOutputClass(CallbackInterface* aClass) {
+void logOutput::setOutputClass(logOutputLogger* aClass) {
     writeOutputClass = aClass;
 }
 
-bool logOutput::write(const char *theContents) const {
+bool logOutput::write(const char *theContents, const loggingLevel logLevel) const {
     if (writeOutputClass  != nullptr) {
-        return (*writeOutputClass).error(theContents);
+        return (*writeOutputClass).output(theContents, logLevel);
     } else {
         return (*writeOutput)(theContents);
     }
