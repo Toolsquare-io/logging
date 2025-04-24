@@ -58,12 +58,13 @@ class uLog {
     // configuring the logging object
     // ------------------------------
     void setOutput(uint32_t outputIndex, bool (*aFunction)(const char*));                                     // sets a pointer to a function handling the output of the logging to eg serial, network or file on SD card, etc.
-    void setOutputClass(uint32_t outputIndex, logOutputLogger *aClass);                                     // sets a pointer to a function handling the output of the logging to eg serial, network or file on SD card, etc.
+    void setOutputClass(uint32_t outputIndex, logOutputLogger *aClass);                                       // sets a pointer to a function handling the output of the logging to eg serial, network or file on SD card, etc.
     bool outputIsActive(uint32_t outputIndex);                                                                // is this output active
     void setTimeSource(bool (*aFunction)(char*, uint32_t));                                                   // sets a pointer to a function providing the timestamp prefix string.
     void setLoggingLevel(uint32_t outputIndex, subSystem theSubSystem, loggingLevel itemLoggingLevel);        // set level of logging for one subsystem
     void setLoggingLevel(uint32_t outputIndex, loggingLevel itemLoggingLevel);                                // set level of logging for all subsystems
     loggingLevel getLoggingLevel(uint32_t outputIndex, subSystem theSubSystem);                               //
+    void setFormattedOutput(uint32_t outputIndex, bool newSetting);                                           // set the formatting output option
     void setColoredOutput(uint32_t outputIndex, bool newSetting);                                             // set the colorize output option
     bool isColoredOutput(uint32_t outputIndex);                                                               // set the colorize output option
     void setIncludeTimestamp(uint32_t outputIndex, bool newSetting);                                          // set the includeTimestamp option

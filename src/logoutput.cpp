@@ -20,6 +20,14 @@ loggingLevel logOutput::getLoggingLevel(subSystem theSubSystem) const {
     return theLoggingLevel[static_cast<uint8_t>(theSubSystem)];
 }
 
+void logOutput::setFormattedOutput(bool newSetting) {
+    formattedOutput = newSetting;
+}
+
+bool logOutput::isFormattedOutput() const {
+    return formattedOutput;
+}
+
 void logOutput::setColoredOutput(bool newSetting) {
     colorOutput = newSetting;
 }

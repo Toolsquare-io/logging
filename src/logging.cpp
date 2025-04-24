@@ -118,8 +118,9 @@ void uLog::output() {
     while (level > 0) {                                                                                    // if any items in buffer :
         for (uint32_t outputIndex = 0; outputIndex < maxNmbrOutputs; outputIndex++) {                      // for all outputs
             if (outputs[outputIndex].isActive() && (checkLoggingLevel(outputIndex, items[head]))) {        // if this output is active and it wants this level of logitem.
-                const loggingLevel logLevel = items[head].theLoggingLevel;                                                        // get the logging level of this item
+                const loggingLevel logLevel = items[head].theLoggingLevel;                                 // get the logging level of this item
                 format(outputIndex);                                                                       // format the item according to the output's settings
+
                 (void)outputs[outputIndex].write(contents, items[head].theLoggingLevel);
             }
         }
@@ -151,7 +152,9 @@ void uLog::format(uint32_t outputIndex) {
         strcat(contents, items[head].timestamp);        // add timestamp string
         strcat(contents, " ");                          // add a space
     }
-    strcat(contents, toStringShort(items[head].theLoggingLevel));
+    if (outputs[outputIndex].isFormattedOutput()) {
+        strcat(contents, toStringShort(items[head].theLoggingLevel));
+    }
     uint32_t tmpLength = strnlen(contents, logItem::maxItemLength);
 
     // TODO show trunctation with trailing...
@@ -162,7 +165,9 @@ void uLog::format(uint32_t outputIndex) {
     } else {
         strncat(contents, items[head].contents, (logItem::maxItemLength - (tmpLength + 1U)));        // add raw contents
     }
-    strcat(contents, "\n");        // final newLine ??
+    if (outputs[outputIndex].isFormattedOutput()) {
+        strcat(contents, "\n");        // final newLine ??
+    }
 }
 
 void uLog::setTimeSource(bool (*aFunction)(char *, uint32_t)) {
@@ -200,6 +205,12 @@ void uLog::setLoggingLevel(uint32_t outputIndex, loggingLevel theLoggingLevel) {
         for (uint8_t subSystemIndex = 0; subSystemIndex < static_cast<uint8_t>(subSystem::nmbrOfSubsystems); subSystemIndex++) {
             outputs[outputIndex].setLoggingLevel(static_cast<subSystem>(subSystemIndex), theLoggingLevel);
         }
+    }
+}
+
+void uLog::setFormattedOutput(uint32_t outputIndex, bool newSetting) {
+    if (outputIndex < maxNmbrOutputs) {
+        outputs[outputIndex].setFormattedOutput(newSetting);
     }
 }
 
